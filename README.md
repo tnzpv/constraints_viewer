@@ -1,2 +1,2 @@
 # constraints_viewer
-show all constraints between different armatures or objects in scene
+blender add-on to show all constraints between different armatures or objects in scene.
