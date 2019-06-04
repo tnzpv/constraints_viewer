@@ -22,36 +22,24 @@ class CVShowConstraints(bpy.types.Operator):
                 scene_csts[k] = v
         # process infos - populate list
         for cst, data in scene_csts.items():
-            regex = '\W\d{3}'
             cst_name = cst.name
             # SLAVE
-            slave_name = data[0].name.split('_')[0]
-            instance = re.search(regex, data[0].name)
-            if instance:
-                keep_dgt = instance.group(0)
-            else:
-                keep_dgt = ''
+            slave_name = data[0].name
             # if object
             if data[1] == '':
-                slave = '{}{}'.format(slave_name, keep_dgt)
+                slave = slave_name
             else:
                 bone_slave = data[1].name
-                slave = '{}{}-{}'.format(slave_name, keep_dgt, bone_slave)
+                slave = '{}-{}'.format(slave_name, bone_slave)
             # TARGET
             tgtinfos = data[-1]
             if tgtinfos['target']:
-                instance_tgt = re.search(regex, tgtinfos['target'].name)
-                if instance_tgt:
-                    target_dgt = instance_tgt.group(0)
-                else:
-                    target_dgt = ''
-                if tgtinfos['target']:
-                    target_name = tgtinfos['target'].name.split('_')[0]
+                target_name = tgtinfos['target'].name
                 if tgtinfos['subtarget']:
                     bone_target = tgtinfos['subtarget']
-                    target = '{}{}-{}'.format(target_name, target_dgt, bone_target)
+                    target = '{}-{}'.format(target_name, bone_target)
                 else:
-                    target = '{}{}'.format(target_name, target_dgt)
+                    target = target_name
             else:
                 target = 'EMPTY'
 
