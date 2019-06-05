@@ -39,4 +39,7 @@ def register():
 
 
 def unregister():
+    del bpy.types.Scene.scene_constraints
+    del bpy.types.Scene.active_scene_constraints
+
     bpy.utils.unregister_module(__name__)
