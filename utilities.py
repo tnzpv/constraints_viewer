@@ -2,6 +2,7 @@ import bpy
 
 
 def get_users(obj, types=(bpy.types.Object, bpy.types.Armature)):
+    """ get users of the given types """
     users = list()
     object_users = list(list(bpy.data.user_map(subset=[obj]).values())[0])
     for user in object_users:
@@ -12,6 +13,7 @@ def get_users(obj, types=(bpy.types.Object, bpy.types.Armature)):
 
 
 def get_constraint_bones(armature):
+    """ get all bones with a constraint in the given armature """
     bones = list()
     for bone in armature.pose.bones:
         if bone.constraints:
@@ -47,10 +49,11 @@ def get_constraints_on_object(object):
     return constraints
 
 
-def dict_visual_props(object, hidden_props=None, readonly_props=None):
+def dict_visual_props(obj, hidden_props=None, readonly_props=None):
     """
+    store constraint data in a dict
     hidden_props= list of props you still need, even if hidden or readonly
-    :param object: from which you want properties
+    :param obj: from which you want properties
     :param hidden_props: list of props you still need, even if hidden
     :param readonly_props: list of props you still need, even if readonly
     :return: dict of properties and values
@@ -61,12 +64,12 @@ def dict_visual_props(object, hidden_props=None, readonly_props=None):
         hidden_props = ['type']
     if not readonly_props:
         readonly_props = []
-    for prop in dir(object):
+    for prop in dir(obj):
         try:
-            if not object.is_property_hidden(prop) and not object.is_property_readonly(prop):
-                tgtinfos[prop] = getattr(object, prop, None)
+            if not obj.is_property_hidden(prop) and not obj.is_property_readonly(prop):
+                tgtinfos[prop] = getattr(obj, prop, None)
             elif prop in hidden_props or prop in readonly_props:
-                tgtinfos[prop] = getattr(object, prop, None)
+                tgtinfos[prop] = getattr(obj, prop, None)
             else:
                 continue
         except TypeError:
