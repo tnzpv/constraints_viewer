@@ -1,4 +1,3 @@
-import re
 import bpy
 from . import utilities
 
